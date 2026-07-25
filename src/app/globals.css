@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+:root {
+  --color-ivory: #f6f4ef;
+  --color-mint: #eaf4f4;
+  --color-gold: #d9c6a5;
+  --color-gold-deep: #8a6a35;
+  --color-sage: #b8d8d8;
+  --color-sage-deep: #4f7373;
+  --color-ink: #1f2a2e;
+  --color-ink-soft: #435055;
+  --background: var(--color-ivory);
+  --foreground: var(--color-ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ivory: var(--color-ivory);
+  --color-mint: var(--color-mint);
+  --color-gold: var(--color-gold);
+  --color-gold-deep: var(--color-gold-deep);
+  --color-sage: var(--color-sage);
+  --color-sage-deep: var(--color-sage-deep);
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --font-heading: var(--font-space-grotesk);
+  --font-body: var(--font-inter);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gold) transparent;
+}
+
+html {
+  background: var(--background);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.glass-dark {
+  background: rgba(31, 42, 46, 0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.text-gradient-gold {
+  background: linear-gradient(120deg, var(--color-gold-deep), #b99b68 55%, var(--color-sage-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-radial-hero {
+  background:
+    radial-gradient(60% 50% at 80% 10%, rgba(217, 198, 165, 0.35) 0%, rgba(217, 198, 165, 0) 60%),
+    radial-gradient(50% 40% at 15% 20%, rgba(184, 216, 216, 0.4) 0%, rgba(184, 216, 216, 0) 60%),
+    linear-gradient(180deg, #fbfaf7 0%, var(--color-ivory) 100%);
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+@media print {
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .glass,
+  .glass-dark {
+    background: #fff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-color: #ddd !important;
+  }
+}
