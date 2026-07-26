@@ -15,6 +15,7 @@ export const siteConfig = {
     phoneRaw: "9930431831",
     email: "info@vkjhaassociates.com",
     enquiryEmail: "adminhub@vkjhaassociates.com",
+    bookingNotificationEmail: "vkjha@vkjhaassociates.com",
   },
 };
 
@@ -42,10 +43,9 @@ export type NavEntry =
   | ({ kind: "link" } & NavLink)
   | { kind: "dropdown"; label: string; items: NavLink[] };
 
-// Structure used by the header — groups related pages under one dropdown.
+// Structure used by the header — groups related pages under dropdowns.
 export const mainNav: NavEntry[] = [
   { kind: "link", label: "Home", href: "/" },
-  { kind: "link", label: "About", href: "/about" },
   { kind: "link", label: "Leadership", href: "/leadership" },
   { kind: "link", label: "Industries", href: "/industries" },
   { kind: "link", label: "Services", href: "/services" },
@@ -58,9 +58,16 @@ export const mainNav: NavEntry[] = [
       { label: "Notices & Litigation", href: "/notices-litigation" },
     ],
   },
-  { kind: "link", label: "Testimonials", href: "/testimonials" },
-  { kind: "link", label: "FAQs", href: "/faqs" },
-  { kind: "link", label: "Contact", href: "/contact" },
+  {
+    kind: "dropdown",
+    label: "About",
+    items: [
+      { label: "About Us", href: "/about" },
+      { label: "Testimonials", href: "/testimonials" },
+      { label: "FAQs", href: "/faqs" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
 ];
 
 // Legal pages — footer + sitemap only, not part of the main nav.

@@ -3,18 +3,15 @@
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, AlertCircle } from "lucide-react";
-import { createClient } from "@/lib/supabase/client";
 import { services } from "@/lib/content/services";
 
 const inputClass =
   "w-full rounded-xl border border-white/70 bg-white/60 px-4 py-2.5 text-sm text-ink placeholder:text-ink-soft/60 outline-none transition-colors focus:border-gold-deep focus:bg-white/80";
 
 export default function BookingForm({
-  userId,
   defaultFullName,
   defaultEmail,
 }: {
-  userId: string;
   defaultFullName: string;
   defaultEmail: string;
 }) {
@@ -29,35 +26,34 @@ export default function BookingForm({
 
     const form = new FormData(e.currentTarget);
     const payload = {
-      client_id: userId,
-      full_name: String(form.get("fullName") || "").trim(),
-      company: String(form.get("company") || "").trim() || null,
+      fullName: String(form.get("fullName") || "").trim(),
+      company: String(form.get("company") || "").trim() || undefined,
       phone: String(form.get("phone") || "").trim(),
       email: String(form.get("email") || "").trim(),
       service: String(form.get("service") || ""),
-      preferred_date: String(form.get("preferredDate") || ""),
-      preferred_time: String(form.get("preferredTime") || ""),
-      meeting_mode: String(form.get("meetingMode") || "online") as
+      preferredDate: String(form.get("preferredDate") || ""),
+      preferredTime: String(form.get("preferredTime") || ""),
+      meetingMode: String(form.get("meetingMode") || "online") as
         | "online"
         | "offline",
-      notes: String(form.get("notes") || "").trim() || null,
+      notes: String(form.get("notes") || "").trim() || undefined,
     };
 
-    const supabase = createClient();
-    const { data, error } = await supabase
-      .from("bookings")
-      .insert(payload)
-      .select("id")
-      .single();
+    const res = await fetch("/api/bookings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const body = await res.json().catch(() => ({}));
 
     setLoading(false);
 
-    if (error) {
-      setError(error.message);
+    if (!res.ok) {
+      setError(body.error || "Could not create the booking. Please try again.");
       return;
     }
 
-    router.push(`/dashboard/bookings/${data.id}`);
+    router.push(`/dashboard/bookings/${body.id}`);
     router.refresh();
   }
 

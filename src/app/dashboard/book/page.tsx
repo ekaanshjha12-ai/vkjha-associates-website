@@ -31,7 +31,6 @@ export default async function BookPage() {
         </p>
         <div className="mt-6">
           <BookingForm
-            userId={user!.id}
             defaultFullName={profile?.full_name || ""}
             defaultEmail={profile?.email || user!.email || ""}
           />
