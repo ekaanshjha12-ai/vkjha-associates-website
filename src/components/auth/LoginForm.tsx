@@ -10,11 +10,16 @@ import GoogleButton from "@/components/auth/GoogleButton";
 const inputClass =
   "w-full rounded-xl border border-white/70 bg-white/60 px-4 py-2.5 text-sm text-ink placeholder:text-ink-soft/60 outline-none transition-colors focus:border-gold-deep focus:bg-white/80";
 
+const CALLBACK_ERROR_MESSAGE =
+  "Something went wrong finishing sign-in. Please try again — if it keeps happening, try logging in with email and password instead.";
+
 export default function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(
+    searchParams.get("error") === "auth_callback_failed" ? CALLBACK_ERROR_MESSAGE : ""
+  );
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -34,7 +39,7 @@ export default function LoginForm() {
       return;
     }
 
-    const next = searchParams.get("next") || "/dashboard";
+    const next = searchParams.get("next") || "/";
     router.push(next);
     router.refresh();
   }
