@@ -33,6 +33,9 @@ export const metadata: Metadata = {
     siteName: siteConfig.shortName,
     type: "website",
   },
+  verification: {
+    google: "bJm0iMsygFMRH-_o8Ma1V2Fh50vq8iCx0XcSQmoeW54",
+  },
 };
 
 export default function RootLayout({
